@@ -8,12 +8,7 @@ export default class InfoIndex extends React.Component{
   
   constructor(props){
     super(props);
-  }
-
-   state = {
-
-    information:[]
-
+    this.state = { information:[] };
   }
 
   componentDidMount(){
@@ -21,6 +16,16 @@ export default class InfoIndex extends React.Component{
     axios.get('http://127.0.0.1:8000/api/info').then(response =>{
 
         this.setState({ information:response.data.data});
+    });
+
+  }
+
+  deleteInfoRecord(e,infoId){
+    e.preventDefault();
+
+    axios.delete('http://127.0.0.1:8000/api/info/post/'+infoId).then(response =>{
+       this.componentDidMount();
+        console.log("deleted record");
     });
 
   }
@@ -48,7 +53,7 @@ export default class InfoIndex extends React.Component{
                   <td>{information.description}</td>
                   <td>
                     <Link className="btn btn-primary" to={`/info/edit/${information.id}`}>Edit</Link> |    
-                    <Link className="btn btn-danger" to={`/info/delete/${information.id}`}>Delete</Link> 
+                    <Link className="btn btn-danger" to="#" onClick={ (e) => this.deleteInfoRecord(e,information.id)} >Delete</Link> 
                   </td>
                 </tr>
               )}
