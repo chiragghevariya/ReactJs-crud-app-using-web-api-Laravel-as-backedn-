@@ -1,6 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+import PageNotFound from './PageNotFound';
+import InfoIndex from './information/InfoIndex';
+import InfoCreate from './information/InfoCreate';
+import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
 
 export default class App extends React.Component{
   
@@ -8,49 +11,20 @@ export default class App extends React.Component{
     super(props);
   }
 
-   state = {
-
-    information:[]
-
-  }
-
-  componentDidMount(){
-
-    axios.get('http://127.0.0.1:8000/api/info').then(response =>{
-
-        this.setState({ information:response.data.data});
-    });
-
-  }
   render(){
     
     return (
       <div className="App">
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Description</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.state.information.map((information,index) =>
-                <tr>
-                  <th scope="row">{index + 1}</th>
-                  <td>{information.name}</td>
-                  <td>{information.description}</td>
-                  <td>
-                    <a class="btn btn-primary">Edit</a>  <a class="btn btn-danger">Delete</a> 
-                  </td>
-                </tr>
-                )
-            }
-           
-          </tbody>
-        </table>
+         <Router>
+            <div>
+              <Switch>
+                <Route path="/" component={InfoIndex} />
+                <Route path="/info/create" component={InfoCreate} />
+                <Route path="/home" component={InfoIndex} />
+                <Route component={PageNotFound} />
+              </Switch>
+            </div>
+          </Router>
       </div>
     )
   }

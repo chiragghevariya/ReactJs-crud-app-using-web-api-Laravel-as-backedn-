@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import PageNotFound from './PageNotFound';
+import InfoIndex from './information/InfoIndex';
+import InfoCreate from './information/InfoCreate';
+import InfoEdit from './information/InfoEdit';
+import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <Switch>
+      <Route exact path="/" component={InfoIndex} />
+      <Route exact path="/info/create" component={InfoCreate} />
+      <Route exact path="/home" component={InfoIndex} />
+      <Route exact path={`/info/edit/:infoId`} component={InfoEdit} />
+      <Route component={PageNotFound} />
+    </Switch>
+
+  </Router>,
   document.getElementById('root')
 );
 
